@@ -1,70 +1,177 @@
-# Getting Started with Create React App
+# **Veterinary Management System**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**The veterinary management system provides an API for a veterinary clinic to manage its operations. This project is designed to be used by veterinary staff.**
 
-## Available Scripts
+## **Getting Started**
 
-In the project directory, you can run:
+### Used Languages and Tools
+- **Java 8:** _The primary programming language._
+- **Spring Boot:** _A Java-based framework for application development._
+- **Maven:** _Dependency management and project compilation tool._
+- **PostgreSQL and MySQL:** _Database systems._
+- **Git:** _Distributed version control system for versioning and collaboration._
 
-### `npm start`
+### **Prerequisites**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Java 8** or higher must be installed.
+2. **Maven** must be installed.
+3. **PostgreSQL** or MySQL database must be installed.
+4. The application will run by default at **http://localhost:8080**.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **Usage**
 
-### `npm test`
+The veterinary management system API provides the following core features:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### **Animal and Owner Management**
 
-### `npm run build`
+* Adding, updating, viewing, and deleting animals:
+* Adding, updating, viewing, and deleting owners:
+* Filtering owners by name:
+* Filtering animals by name:
+* Viewing all animals of an owner:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### **Vaccine Management**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Adding, updating, viewing, and deleting vaccines for animals:
+* Listing vaccines for an animal based on its ID:
+* Listing animals based on vaccine protection end date:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### **Appointment Management**
 
-### `npm run eject`
+* Creating, updating, viewing, and deleting appointments:
+* Filtering appointments by date and doctor:
+* Filtering appointments by date and animal:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### **Veterinarian Doctor Management**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Adding, updating, viewing, and deleting veterinarian doctors:
+* Doctor's Available Dates Management
+* Adding, updating, viewing, and deleting available dates for a doctor:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Veterinary Management System - API Endpoints
 
-## Learn More
+**This section provides a comprehensive list of API endpoints for the Veterinary Management System. Below are the available endpoints categorized by entity.**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Vaccine
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`PUT /api/v1/vaccine/update/{id}`
+Update a vaccine by vaccine ID.
 
-### Code Splitting
+`POST /api/v1/vaccine/create-with-animal/{animalId}`
+Create a new vaccine using an animal ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`GET /api/v1/vaccine`
+Get all vaccines.
 
-### Analyzing the Bundle Size
+`GET /api/v1/vaccine/{id}`
+Get a vaccine by vaccine ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+`GET /api/v1/vaccine/findByDateRange`
+Get vaccines by date range.
 
-### Making a Progressive Web App
+`DELETE /api/v1/vaccine/delete/{id}`
+Delete a vaccine with the given vaccine ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Customer
 
-### Advanced Configuration
+`PUT /api/v1/customer/update/{id}`
+Update a customer by customer ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+`POST /api/v1/customer/create`
+Create a new customer.
 
-### Deployment
+`GET /api/v1/customer`
+Get all customers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`GET /api/v1/customer/{id}`
+Get a customer by customer ID.
 
-### `npm run build` fails to minify
+`GET /api/v1/customer/{id}/with-animals`
+Get customer details with their associated animals.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+`GET /api/v1/customer/filter-by-name`
+Filter customers by customer name.
+
+`DELETE /api/v1/customer/delete/{id}`
+Delete a customer with the given customer ID.
+
+### AvailableDate
+
+`PUT /api/v1/available_date/update/{id}`
+Update an available date by available date ID.
+
+`POST /api/v1/available_date/create-with-doctor/{doctorId}`
+Create a new available date using a doctor ID.
+
+`GET /api/v1/available_date`
+Get all available dates.
+
+`GET /api/v1/available_date/{id}`
+Get an available date by available date ID.
+
+`DELETE /api/v1/available_date/delete/{id}`
+Delete an available date with the given available date ID.
+
+### AppointmentDate
+
+`PUT /api/v1/appointmentDate/update/{id}`
+Update an appointment date by appointment date ID.
+
+`POST /api/v1/appointmentDate/create-with-doctor-and-animal/{doctorId}/{animalId}`
+Create a new appointment date using a doctor ID and an animal ID.
+
+`GET /api/v1/appointmentDate`
+Get all appointment dates.
+
+`GET /api/v1/appointmentDate/{id}`
+Get an appointment date by ID.
+
+`GET /api/v1/appointmentDate/filter-by-date-range-and-doctor`
+Filter appointment dates by date range and doctor ID.
+
+`GET /api/v1/appointmentDate/filter-by-date-range-and-animal`
+Filter appointment dates by date range and animal ID.
+
+`DELETE /api/v1/appointmentDate/delete/{id}`
+Delete an appointment date with the given appointment date ID.
+
+### Doctor
+
+`PUT /api/v1/doctor/update/{id}`
+Update a doctor by doctor ID.
+
+`POST /api/v1/doctor/create`
+Create a new doctor.
+
+`GET /api/v1/doctor`
+Get all doctors.
+
+`GET /api/v1/doctor/{id}`
+Get a doctor by doctor ID.
+
+`DELETE /api/v1/doctor/delete/{id}`
+Delete a doctor with the given doctor ID.
+
+### Animal
+
+`PUT /api/v1/animal/update/{id}`
+Update an animal by animal ID.
+
+`POST /api/v1/animal/create-with-customer/{customerId}`
+Create a new animal using a customer ID.
+
+`GET /api/v1/animal`
+Get all animals.
+
+`GET /api/v1/animal/{id}`
+Get an animal by animal ID.
+
+`GET /api/v1/animal/{id}/with-vaccines`
+Filter vaccines of an animal using animal ID.
+
+`GET /api/v1/animal/filter-by-name`
+Filter animals by animal name.
+
+`DELETE /api/v1/animal/delete/{animalId}`
+Delete an animal with the given animal ID.
