@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimalService } from '../../services/AnimalService';
-import './AnimalList.css'; // CSS stil dosyanızı ekleyin
+import './AnimalList.css'; 
+import AnimalForm from './AnimalForm';
 
 function AnimalList() {
     const [animals, setAnimals] = useState([]);
@@ -11,7 +12,7 @@ function AnimalList() {
         gender: '',
         colour: '',
         dateOfBirth: '',
-        customerId: '' // Müşteri ID
+        customerId: ''
     });
     const [editingAnimal, setEditingAnimal] = useState({
       id: '', 
@@ -39,7 +40,7 @@ function AnimalList() {
         setSearchId(e.target.value);
     };
 
-        // İsme göre hayvan arama fonksiyonu
+
         const handleNameSearch = async () => {
             if (searchName) {
                 try {
@@ -55,23 +56,21 @@ function AnimalList() {
     
 
     const handleIdSearch = async () => {
-        if (searchId) { // Bir ID girildiyse
+        if (searchId) { 
             try {
                 const animal = await AnimalService.getAnimalById(searchId);
                 if (animal) {
-                    setAnimals([animal]); // Tek hayvanın olduğu bir array set et
+                    setAnimals([animal]); 
                 } else {
-                   // ... ID bulunamadığında yapılacak işlem
+
                 }
             } catch (error) {
-                // ... Hata mesajı ve işlemleri
+
             }
         } else {
-            fetchAnimals(); // ID yoksa tüm hayvanları getir
+            fetchAnimals(); 
         }
     };
-
-
 
     const handleInputChange = (e) => {
         setNewAnimal({ ...newAnimal, [e.target.name]: e.target.value });
@@ -99,19 +98,19 @@ function AnimalList() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Örnek olarak customerId'yi statik olarak belirtiyorum
-            const customerId = '123'; // Gerçek uygulamada bu, seçili veya giriş yapmış müşterinin ID'si olmalı
+
+            const customerId = '123'; 
             const response = await AnimalService.createAnimal(newAnimal, customerId);
             console.log('Yeni hayvan başarıyla oluşturuldu:', response);
-            // Başarılı işlem sonrası yapılacaklar (örneğin durumu güncelleme veya sayfayı yenileme)
+
         } catch (error) {
             console.error('Hayvan oluşturma işlemi başarısız:', error);
-            // Hata durumunda yapılacak işlemler
+
         }
     };
 
     const handleEditClick = (animal) => {
-        setEditingAnimal({ ...animal }); // Tüm bilgilerle güncelleme
+        setEditingAnimal({ ...animal }); 
         setEditMode(true);
       };
     
@@ -134,7 +133,7 @@ function AnimalList() {
     const handleDelete = async (id) => {
         try {
             await AnimalService.deleteAnimal(id);
-            fetchAnimals(); // Silme işleminden sonra hayvan listesini güncelleyin
+            fetchAnimals(); 
         } catch (error) {
             console.error('Hayvan silinirken bir hata oluştu:', error);
         }
@@ -143,9 +142,45 @@ function AnimalList() {
     return (
 
         <div className="container">
-            <h1>Hayvan Listesi</h1>
+         <br /> 
+         <h1 className="mt-3 text-center" style={{ color: "#4F4A45" }}>Hayvan Listesi</h1>
+    
+           <br />
 
-            
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                    <th>ID</th> 
+                        <th>Hayvan Adı</th>
+                        <th>Tür</th>
+                        <th>Cins</th>
+                        <th>Cinsiyet</th>
+                        <th>Renk</th>
+                        <th>Doğum Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {animals.map((animal) => (
+                        <tr key={animal.id}>
+                            <td>{animal.id}</td>
+                            <td>{animal.name}</td>
+                            <td>{animal.species}</td>
+                            <td>{animal.breed}</td>
+                            <td>{animal.gender}</td>
+                            <td>{animal.colour}</td>
+                            <td>{animal.dateOfBirth}</td>
+                            <td>
+                                <button className="btn btn-sm btn-primary" onClick={() => handleEditClick(animal)}>Düzenle</button>&nbsp;
+                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(animal.id)}>Sil</button>
+                            </td>
+                        </tr> 
+                    ))}
+                </tbody>
+
+                
+            </table>
+
 
 
             {/* ID'ye Göre Hayvan Filtreleme */}
@@ -165,28 +200,23 @@ function AnimalList() {
                 onChange={(e) => setSearchName(e.target.value)} 
             />
             <button onClick={handleNameSearch}>Ara</button>
+            <br /> <br />
 
-            {/* Hayvan Listesi Tablosu */}
-            <table className="table table-striped">
-                {/* Tablo başlıkları ve içerik */}
-            </table>
-
-
-            
-
-            <div className="form-group ">
+            {editMode ? (
+                <div>
+                    <h2>Hayvan Güncelle</h2> 
+                    <form onSubmit={handleUpdateAnimal}>
+    <div className="form-group">
         <label htmlFor="name">Hayvan Adı:</label>
         <input 
             type="text" 
             className="form-control" 
             id="name" 
             name="name" 
-            placeholder="Hayvan Adı" 
-            value={newAnimal.name}
-            onChange={handleInputChange}
+            value={editingAnimal?.name || ''} 
+            onChange={(e) => setEditingAnimal({ ...editingAnimal, name: e.target.value })}
         />
     </div>
-
     <div className="form-group">
         <label htmlFor="species">Tür:</label>
         <input 
@@ -194,87 +224,85 @@ function AnimalList() {
             className="form-control" 
             id="species" 
             name="species" 
-            placeholder="Tür" 
-            value={newAnimal.species}
-            onChange={handleInputChange}
+            value={editingAnimal?.species || ''}
+            onChange={(e) => setEditingAnimal({ ...editingAnimal, species: e.target.value })}
         />
     </div>
-
-            
-
-            <div className="form-group">
-    <label htmlFor="breed">Cins:</label>
-    <input 
-        type="text" 
-        className="form-control" 
-        id="breed" 
-        name="breed" 
-        placeholder="Cins" 
-        value={newAnimal.breed}
-        onChange={handleInputChange}
-    />
-</div>
-
-<div className="form-group">
+    <div className="form-group">
+        <label htmlFor="breed">Cins:</label>
+        <input 
+            type="text" 
+            className="form-control" 
+            id="breed" 
+            name="breed" 
+            value={editingAnimal?.breed || ''}
+            onChange={(e) => setEditingAnimal({ ...editingAnimal, breed: e.target.value })}
+        />
+    </div>
+    <div className="form-group gender-select-group">
     <label htmlFor="gender">Cinsiyet:</label>
     <select 
         className="form-control" 
         id="gender" 
         name="gender" 
-        value={newAnimal.gender}
-        onChange={handleInputChange}
+        value={editingAnimal?.gender || ''}
+        onChange={(e) => setEditingAnimal({ ...editingAnimal, gender: e.target.value })}
     >
-        <option value="">Seçiniz...</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option value="">Cinsiyet Seçiniz...</option>
+        <option value="Male">Erkek</option>
+        <option value="Female">Dişi</option>
     </select>
 </div>
 
-<div className="form-group">
-    <label htmlFor="colour">Renk:</label>
-    <input 
-        type="text" 
-        className="form-control" 
-        id="colour" 
-        name="colour" 
-        placeholder="Renk" 
-        value={newAnimal.colour}
-        onChange={handleInputChange}
-    />
-</div>
+    <div className="form-group">
+        <label htmlFor="colour">Renk:</label>
+        <input 
+            type="text" 
+            className="form-control" 
+            id="colour" 
+            name="colour" 
+            value={editingAnimal?.colour || ''}
+            onChange={(e) => setEditingAnimal({ ...editingAnimal, colour: e.target.value })}
+        />
+    </div>
+    <div className="form-group birthdate-group">
+        <label htmlFor="dateOfBirth">Doğum Tarihi:</label>
+        <input 
+            type="date" 
+            className="form-control date-input" 
+            id="dateOfBirth" 
+            name="dateOfBirth" 
+            value={editingAnimal?.dateOfBirth || ''}
+            onChange={(e) => setEditingAnimal({ ...editingAnimal, dateOfBirth: e.target.value })}
+/>
 
-<div className="form-group">
-    <label htmlFor="dateOfBirth">Doğum Tarihi:</label>
-    <input 
-        type="date" 
-        className="form-control" 
-        id="dateOfBirth" 
-        name="dateOfBirth" 
-        value={newAnimal.dateOfBirth}
-        onChange={handleInputChange}
-    />
-</div>
+    </div>
+    <button type="submit" className="btn btn-primary" style={{ backgroundColor:  "#2D9596" }} >Kaydet</button>
+                <button className="btn btn-secondary" onClick={() => { 
+                    setEditingAnimal(null);
+                    setEditMode(false);
+                }}>Vazgeç</button>
+            </form>
+        </div>
+    ) : (
+                <button className="btn btn-primary" style={{ backgroundColor:  "#2D9596" }}  onClick={() => setEditMode(true)}>
+                    Güncelle
+                </button>
 
-<div className="form-group">
-    <label htmlFor="customerId">Müşteri ID:</label>
-    <input 
-        type="text" 
-        className="form-control" 
-        id="customerId" 
-        name="customerId" 
-        placeholder="Müşteri ID" 
-        value={newAnimal.customerId}
-        onChange={handleInputChange}
-    />
-</div>
-<button type="submit" className="btn btn-primary">Kaydet</button>
+                
+            )}
+                <p>Hayvan güncellemek için tablodan düzenle butonuna tıklayın, değişiklikleri yapın ve kaydedin.</p>
 
+<h2>Hayvan Ekleme</h2>
+            <AnimalForm /> 
+    
         </div>
         
         
-
         
     );
+
+    
 }
 
 export default AnimalList;
