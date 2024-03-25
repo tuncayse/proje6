@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://final-project-patika.onrender.com/api/v1/report'; 
+const BASE_URL = 'https://proje6backend.onrender.com/api/v1/report'; 
 
 const getReports = async () => {
   try {
