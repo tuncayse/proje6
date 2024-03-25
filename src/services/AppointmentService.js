@@ -1,4 +1,4 @@
-const BASE_URL = "https://localhost:3000/api/v1/appointmentDate";
+const BASE_URL = "https://proje6backend.onrender.com/api/v1/appointmentDate";
 
 export const AppointmentService = {
     getAllAppointments: async () => {
