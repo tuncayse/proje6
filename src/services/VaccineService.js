@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api/v1/vaccine";
+const BASE_URL = "https://localhost:3000/api/v1/vaccine";
 
 export const VaccineService = {
     getAllVaccines: () => {
