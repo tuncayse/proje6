@@ -2,7 +2,7 @@ const BASE_URL = "https://proje6backendfinalyy.onrender.com/api/v1/doctor";
 
 export const DoctorService = {
 
-
+//
     getAllDoctors: async () => {
         try {
             const response = await fetch(`${BASE_URL}`);
