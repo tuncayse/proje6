@@ -1,5 +1,5 @@
 const BASE_URL = "https://proje6backendfinalyy.onrender.com/api/v1/vaccine";
-
+//
 export const VaccineService = {
     getAllVaccines: async () => {
         try {
