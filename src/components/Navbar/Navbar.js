@@ -51,13 +51,12 @@ function Navbar() {
                 Müsait Günler
               </Link>
             </li>
-            {/* Yeni eklenen Raporlar linki */}
+         
             <li className="nav-item">
               <Link className="nav-link" to="/reports">
                 Raporlar
               </Link>
             </li>
-            {/* Diğer ekstra linkler */}
           </ul>
         </div>
       </div>

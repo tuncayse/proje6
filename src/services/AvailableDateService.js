@@ -1,6 +1,7 @@
-const BASE_URL = "https://proje6backend.onrender.com/api/v1/available_date";
+import axios from 'axios'; 
+const BASE_URL = "http://localhost:3000/api/v1/available_date";
 
-export const AvailableDateService = {
+/*export const AvailableDateService = {
     getAllDates: async () => {
         const response = await fetch(`${BASE_URL}`);
         if (!response.ok) {
@@ -11,8 +12,34 @@ export const AvailableDateService = {
             ...date,
             doctorName: date.doctor ? date.doctor.name : 'Doktor Bilgisi Yok'
         }));
-    },
+    }, */
+
+
+    export const AvailableDateService = {
+        getAllDates: async () => {
+            try {
+                const response = await axios.get(BASE_URL);
+                return response.data.map(date => ({
+                    ...date,
+                    doctorName: date.doctor ? date.doctor.name : 'Doktor Bilgisi Yok'
+                }));
+            } catch (error) {
+                console.error('Müsait günler alınamadı:', error); 
+                return []; // Return an empty array on error
+            }
+        },
     
+    getAllDates: async () => {
+        const response = await fetch(`${BASE_URL}`);
+        if (!response.ok) {
+            throw new Error('Müsait günler alınamadı.');
+        }
+        const dates = await response.json();
+        return Array.isArray(dates) ? dates.map(date => ({
+            ...date,
+            doctorName: date.doctor ? date.doctor.name : 'Doktor Bilgisi Yok'
+        })) : [];
+    },
 
     getDateById: async (id) => {
         const response = await fetch(`${BASE_URL}/${id}`);
@@ -34,7 +61,7 @@ export const AvailableDateService = {
             },
             body: JSON.stringify({
                 ...dateData,
-                availableDate: new Date(dateData.date).toISOString().split('T')[0]  // yyyy-MM-dd formatına dönüştür
+                availableDate: new Date(dateData.date).toISOString().split('T')[0]
             }),
         });
         if (!response.ok) {
@@ -60,14 +87,26 @@ export const AvailableDateService = {
         return await response.json();
     },
 
+    getAllDates: async () => {
+        try {
+            const response = await axios.get(BASE_URL);
+            return response.data.map(date => ({
+                ...date,
+                doctorName: date.doctor ? date.doctor.name : 'Doktor Bilgisi Yok'
+            }));
+        } catch (error) {
+            throw new Error('Müsait günler alınamadı.');
+        }
+    },
+
     createDateWithDoctor: async (dateData, doctorId) => {
-        // Tarih formatını düzenle
+    
         const formattedDateData = {
             ...dateData,
             availableDate: new Date(dateData.date).toISOString().split('T')[0]
         };
     
-        // API isteğini gönder
+
         const response = await fetch(`${BASE_URL}/create-with-doctor/${doctorId}`, {
             method: 'POST',
             headers: {

@@ -1,5 +1,5 @@
 .available-date-container {
-    margin: 40px;
+    margin: 20px;
     padding: 10px;
     background-color: #fff;
     border-radius: 8px;
@@ -31,7 +31,7 @@
 }
 
 .available-date-container td {
-    color: #555555;
+    color: #555;
 }
 
 .form-group {
