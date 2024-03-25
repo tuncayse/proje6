@@ -1,4 +1,4 @@
-const BASE_URL = "https://localhost:3000/api/v1/available_date";
+const BASE_URL = "https://proje6backend.onrender.com/api/v1/available_date";
 
 export const AvailableDateService = {
     getAllDates: async () => {
