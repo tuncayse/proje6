@@ -8,4 +8,5 @@ https://github.com/tuncayse/Proje6BackEndFinalyy.git
 
 UML Diagram:
 
-![image](https://github.com/tuncayse/proje6/assets/143759353/b4286831-61de-46a2-b87e-9d4e5813d6e1)
+![image](https://github.com/tuncayse/proje6/assets/143759353/89c6326e-fbf4-45bf-a07f-cd441bac8185)
+
