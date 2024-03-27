@@ -1,5 +1,7 @@
 const BASE_URL = "https://proje6backendfinalyy.onrender.com/api/v1/appointmentDate";
 
+//
+
 export const AppointmentService = {
     getAllAppointments: async () => {
         const response = await fetch(`${BASE_URL}`);
